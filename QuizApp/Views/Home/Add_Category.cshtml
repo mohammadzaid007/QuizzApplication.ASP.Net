@@ -1,0 +1,76 @@
+﻿@model QuizApp.Models.tbl_category
+
+@{
+    ViewBag.Title = "Add_Category";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<h1 style="text-align:center;background-color:dimgray">Add_Category</h1>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>Course </h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.cat_name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.cat_name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.cat_name, "", new { @class = "text-danger" })
+
+
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div style="overflow:scroll">
+
+<table class="table table-responsive">
+
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+
+            <th>Room Name</th>
+            <th>View All Questions</th>
+
+        </tr>
+
+    </thead>
+
+
+    <tbody>
+        @foreach (var item in ViewData["list"] as List<QuizApp.Models.tbl_category>)
+        {
+            <tr>
+                <td>@item.cat_id</td>
+
+                <td>@item.cat_name</td>
+
+                <td>@item.cat_encrypted_string</td>
+
+                <td><a class="btn btn-info btn-sm" href="@Url.Action("ViewAllQuestions", new { id = @item.cat_id })">View Questions of this exam!</a></td>
+
+            </tr>
+        }
+
+        <tr>
+            
+
+        </tr>
+    </tbody>
+
+</table>
+</div>
